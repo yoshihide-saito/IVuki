@@ -1,6 +1,14 @@
 import colors from 'vuetify/es5/util/colors'
 
+// `DEPLOY_ENV` が `GH_PAGES` の場合のみ `router.base = '/nuxtFirst/'` を追加する
+const routerBase = process.env.DEPLOY_ENV === 'GH_PAGES' ? {
+  router: {
+    base: '/nuxtFirst/'
+  }
+} : {}
+
 export default {
+  target: 'static',
   // Disable server-side rendering: https://go.nuxtjs.dev/ssr-mode
   ssr: false,
 
@@ -66,5 +74,11 @@ export default {
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
   build: {
-  }
+  },
+
+  ...routerBase,
+
+  generate: {
+    dir: 'docs'
+  },
 }
